@@ -51,11 +51,28 @@ public class ParkingController {
 
     int count = 0;
 
-    public void CheckIn(String selectedFloor) {
+    public void CheckIn(String selectedFloorId) {
 
         Date date = new Date();
         count++;
-        Vehicle vehicle = new Vehicle(count + "", selectedFloor, date, date);
+        vehicleDao.addVehicle(new Vehicle(count + "", floorDao.getFloorById(selectedFloorId), date, date));
+    }
+
+    public void updateVehicleTable(DefaultTableModel tableModel) {
+        tableModel.setRowCount(0);
+
+        List<Vehicle> vehicles = vehicleDao.getAllVehicles();
+        for (Vehicle vehicle : vehicles) {
+            Object[] rowData = {
+                vehicle.getVehicleId(), 
+                vehicle.getFloor().getFloorId(), 
+                vehicle.getTimeIn(), 
+                vehicle.getTimeOut(),
+                "",
+                ""
+            };
+            tableModel.addRow(rowData);
+        }
     }
 
     public void CheckOut() {

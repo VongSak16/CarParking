@@ -10,6 +10,7 @@ public class Floor {
 
     private String floorId;
     private int capacity;
+    
     private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 
     public Floor(String floorId, int capacity) {

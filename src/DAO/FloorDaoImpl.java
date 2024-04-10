@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class FloorDaoImpl implements FloorDao {
 
     private List<Floor> floors = new ArrayList<>();
-    
+
     @Override
     public void addFloor(Floor floor) {
         floors.add(floor);
@@ -20,5 +20,15 @@ public class FloorDaoImpl implements FloorDao {
     @Override
     public List<Floor> getAllFloors() {
         return floors;
+    }
+
+    @Override
+    public Floor getFloorById(String id) {
+        for (Floor floor : floors) {
+            if (floor.getFloorId().equals(id)) {
+                return floor;
+            }
+        }
+        return null;
     }
 }

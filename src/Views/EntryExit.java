@@ -37,6 +37,8 @@ public class EntryExit extends javax.swing.JFrame {
         btn_checkout = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_floor = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_vehicle = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         txt_mall = new javax.swing.JLabel();
 
@@ -130,22 +132,61 @@ public class EntryExit extends javax.swing.JFrame {
             tbl_floor.getColumnModel().getColumn(2).setResizable(false);
         }
 
+        tbl_vehicle.setBackground(new java.awt.Color(255, 255, 255));
+        tbl_vehicle.setForeground(new java.awt.Color(0, 0, 0));
+        tbl_vehicle.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Vehicle ID", "Floor", "Time In", "Time  Out", "Duration", "Paid"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tbl_vehicle);
+        if (tbl_vehicle.getColumnModel().getColumnCount() > 0) {
+            tbl_vehicle.getColumnModel().getColumn(4).setResizable(false);
+            tbl_vehicle.getColumnModel().getColumn(5).setResizable(false);
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btn_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_checkin, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(cbo_floor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 347, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btn_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_checkin, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbo_floor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(48, 48, 48))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +202,9 @@ public class EntryExit extends javax.swing.JFrame {
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(btn_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(416, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -177,7 +220,7 @@ public class EntryExit extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(txt_mall, javax.swing.GroupLayout.PREFERRED_SIZE, 952, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,20 +250,12 @@ public class EntryExit extends javax.swing.JFrame {
 
 
     private void btn_checkinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_checkinActionPerformed
-
-//        JComboBox<String> comboBox = new JComboBox<String>();
-//
-//        if (cbo_floor.selected == "ad") {
-//            String 
-//        }
-//        selectedItem = (String) comboBox.getSelectedItem();
-//        controller.CheckIn();
-//        controller.updateFloorTable((DefaultTableModel) tbl_floor.getModel());
+        controller.CheckIn((String) cbo_floor.getSelectedItem());
+        controller.updateVehicleTable((DefaultTableModel) tbl_vehicle.getModel());
     }//GEN-LAST:event_btn_checkinActionPerformed
 
     private void btn_checkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_checkoutActionPerformed
         // TODO add your handling code here:
-        controller.CheckIn((String) cbo_floor.getSelectedItem());
     }//GEN-LAST:event_btn_checkoutActionPerformed
 
     private void cbo_floorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_floorActionPerformed
@@ -237,8 +272,10 @@ public class EntryExit extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tbl_floor;
+    private javax.swing.JTable tbl_vehicle;
     private javax.swing.JLabel txt_mall;
     // End of variables declaration//GEN-END:variables
 }

@@ -9,20 +9,32 @@ import java.util.Date;
 public class Vehicle {
 
     private String vehicleId;
-    private String floorId;
     private Date timeIn;
     private Date timeOut;
 
-    public Vehicle(String vehicleId, String floorId, Date timeIn, Date timeOut) {
+    private Floor floor;
+
+    public Vehicle(String vehicleId, Floor floor, Date timeIn, Date timeOut) {
 
         this.vehicleId = vehicleId;
-        this.floorId = floorId;
+        this.floor = floor;
         this.timeIn = timeIn;
         this.timeOut = timeOut;
     }
 
-    public String getFloorId() {
-        return floorId;
+    public String getVehicleId() {
+        return vehicleId;
     }
-;
+
+    public Date getTimeIn() {
+        return timeIn;
+    }
+
+    public Date getTimeOut() {
+        return timeOut;
+    }
+
+    public Floor getFloor() {
+        return floor;
+    }
 }
