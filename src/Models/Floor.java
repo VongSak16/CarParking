@@ -11,7 +11,6 @@ public class Floor {
     private String floorId;
     private int capacity;
     
-    private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 
     public Floor(String floorId, int capacity) {
         this.floorId = floorId;
@@ -26,7 +25,4 @@ public class Floor {
         return capacity;
     }
 
-    public ArrayList<Vehicle> getVehicle() {
-        return vehicles;
-    }
 }

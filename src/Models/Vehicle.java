@@ -11,7 +11,7 @@ public class Vehicle {
     private String vehicleId;
     private Date timeIn;
     private Date timeOut;
-
+    
     private Floor floor;
 
     public Vehicle(String vehicleId, Floor floor, Date timeIn, Date timeOut) {
@@ -37,4 +37,8 @@ public class Vehicle {
     public Floor getFloor() {
         return floor;
     }
+    
+    public void setTimeOut(Date newtimeOut) {
+    this.timeOut = newtimeOut;
+  }
 }

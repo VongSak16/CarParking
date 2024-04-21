@@ -1,34 +1,39 @@
 package DAO;
 
-import java.util.List;
 import Models.Floor;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
-/**
- *
- * @author SAK
- */
 public class FloorDaoImpl implements FloorDao {
 
-    private List<Floor> floors = new ArrayList<>();
+    private LinkedHashMap<Floor, Integer> floors = new LinkedHashMap<>();
 
     @Override
     public void addFloor(Floor floor) {
-        floors.add(floor);
+        floors.put(floor, 0);
     }
 
     @Override
-    public List<Floor> getAllFloors() {
+    public LinkedHashMap<Floor, Integer> getAllFloors() {
         return floors;
     }
 
     @Override
-    public Floor getFloorById(String id) {
-        for (Floor floor : floors) {
-            if (floor.getFloorId().equals(id)) {
+    public Floor getFloorById(String floorId) {
+        for (Floor floor : floors.keySet()) {
+            if (floor.getFloorId().equals(floorId)) {
                 return floor;
             }
         }
         return null;
+    }
+    
+    @Override
+    public void setVehicleCountById(String floorId, int amount) {
+        for (Floor floor : floors.keySet()) {
+            if (floor.getFloorId().equals(floorId)) {
+                floors.put(floor, amount);
+                return;
+            }
+        }
     }
 }
