@@ -23,8 +23,8 @@ public class ParkingController {
 
     public ParkingController() {
         floorDao.addFloor(new Floor("FG", 10));
-        floorDao.addFloor(new Floor("F1", 11));
-        floorDao.addFloor(new Floor("F2", 12));
+        floorDao.addFloor(new Floor("F1", 10));
+        floorDao.addFloor(new Floor("F2", 10));
     }
 
     public LinkedHashMap<Floor, Integer> getAllFloors() {
@@ -125,9 +125,10 @@ public class ParkingController {
                 cost = 4000;
             } else if (hours < 5) {
                 cost = 5000;
-            } else if (hours < 12) {
+            } else if (hours < 24) {
                 cost = 6000;
             }
+            
             // Check if exit time is on a different day than entry time
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(timeIn);
@@ -139,7 +140,7 @@ public class ParkingController {
             if (entryDay != exitDay) {
                 cost = 20000;
             }
-            return "$ " + cost;
+            return  cost + " riel";
         
         } else {
             return "";
