@@ -2,12 +2,16 @@ package Views;
 
 import javax.swing.table.DefaultTableModel;
 import Controllers.ParkingController;
+import Controllers.TestingController;
 import Models.Floor;
 import Models.Vehicle;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -56,13 +60,20 @@ public class ParkingView extends javax.swing.JFrame {
         tbl_floor = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_vehicle = new javax.swing.JTable();
-        txt_vehicleId = new javax.swing.JTextField();
+        txt_vehicleIdIn = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txt_info = new javax.swing.JTextArea();
         btn_confirmPayment = new javax.swing.JButton();
         btn_addhour = new javax.swing.JButton();
         rdo_tblShowVehiclesAll = new javax.swing.JRadioButton();
+        btn_genIDin = new javax.swing.JButton();
+        btn_genIDout = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        txt_vehicleIdOut = new javax.swing.JTextField();
+        txt_totalMoney = new javax.swing.JLabel();
+        txt_totalVehiclesStay = new javax.swing.JLabel();
+        txt_totalVehiclesLeft = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txt_mall = new javax.swing.JLabel();
 
@@ -199,7 +210,12 @@ public class ParkingView extends javax.swing.JFrame {
             tbl_vehicle.getColumnModel().getColumn(5).setPreferredWidth(20);
         }
 
-        txt_vehicleId.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txt_vehicleIdIn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txt_vehicleIdIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_vehicleIdInActionPerformed(evt);
+            }
+        });
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -208,7 +224,7 @@ public class ParkingView extends javax.swing.JFrame {
 
         txt_info.setBackground(new java.awt.Color(255, 255, 255));
         txt_info.setColumns(20);
-        txt_info.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txt_info.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txt_info.setForeground(new java.awt.Color(0, 0, 0));
         txt_info.setRows(5);
         jScrollPane3.setViewportView(txt_info);
@@ -225,7 +241,7 @@ public class ParkingView extends javax.swing.JFrame {
 
         btn_addhour.setBackground(new java.awt.Color(255, 255, 255));
         btn_addhour.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        btn_addhour.setForeground(new java.awt.Color(102, 102, 102));
+        btn_addhour.setForeground(new java.awt.Color(153, 153, 153));
         btn_addhour.setText("+1h");
         btn_addhour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,6 +258,53 @@ public class ParkingView extends javax.swing.JFrame {
             }
         });
 
+        btn_genIDin.setBackground(new java.awt.Color(255, 255, 255));
+        btn_genIDin.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btn_genIDin.setForeground(new java.awt.Color(153, 153, 153));
+        btn_genIDin.setText("Scan In Plate ID");
+        btn_genIDin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_genIDinActionPerformed(evt);
+            }
+        });
+
+        btn_genIDout.setBackground(new java.awt.Color(255, 255, 255));
+        btn_genIDout.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btn_genIDout.setForeground(new java.awt.Color(153, 153, 153));
+        btn_genIDout.setText("Scan Out Plate ID");
+        btn_genIDout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_genIDoutActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Vehicles ID:");
+
+        txt_vehicleIdOut.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txt_vehicleIdOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_vehicleIdOutActionPerformed(evt);
+            }
+        });
+
+        txt_totalMoney.setBackground(new java.awt.Color(255, 255, 255));
+        txt_totalMoney.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txt_totalMoney.setForeground(new java.awt.Color(204, 0, 204));
+        txt_totalMoney.setText("Total Money: 0.0 riel");
+
+        txt_totalVehiclesStay.setBackground(new java.awt.Color(255, 255, 255));
+        txt_totalVehiclesStay.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txt_totalVehiclesStay.setForeground(new java.awt.Color(204, 0, 204));
+        txt_totalVehiclesStay.setText("Total Vehicles Stay: 0");
+
+        txt_totalVehiclesLeft.setBackground(new java.awt.Color(255, 255, 255));
+        txt_totalVehiclesLeft.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txt_totalVehiclesLeft.setForeground(new java.awt.Color(204, 0, 204));
+        txt_totalVehiclesLeft.setText("Total Vehicles Left: 0");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -249,29 +312,52 @@ public class ParkingView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbo_floor, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3)
+                    .addComponent(btn_confirmPayment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btn_checkout, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                            .addComponent(btn_checkin, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_checkin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_checkout, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbo_floor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txt_vehicleId, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btn_confirmPayment, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE))
+                            .addComponent(txt_vehicleIdIn, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                            .addComponent(txt_vehicleIdOut))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btn_addhour))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 971, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rdo_tblShowVehiclesAll))
-                .addGap(19, 19, 19))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txt_totalMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(227, 227, 227))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txt_totalVehiclesStay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addComponent(btn_addhour))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txt_totalVehiclesLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(272, 272, 272)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_genIDout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_genIDin, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(701, 701, 701))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 971, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rdo_tblShowVehiclesAll))
+                        .addGap(732, 732, 732))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,30 +365,44 @@ public class ParkingView extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbo_floor)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btn_checkin, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbo_floor, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_checkin, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btn_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_vehicleId)))
+                            .addComponent(txt_vehicleIdIn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_vehicleIdOut, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_confirmPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_addhour, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btn_genIDin, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_genIDout, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btn_addhour, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txt_totalMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txt_totalVehiclesStay, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_totalVehiclesLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(13, 13, 13)
                         .addComponent(rdo_tblShowVehiclesAll)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1)))
-                .addGap(22, 22, 22))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)))
+                .addGap(63, 63, 63))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -318,7 +418,7 @@ public class ParkingView extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(txt_mall, javax.swing.GroupLayout.PREFERRED_SIZE, 952, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(500, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,7 +446,7 @@ public class ParkingView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void displayFloorTable(LinkedHashMap<Floor, Integer> getAllFloors) {
+    private void displayFloorTable(LinkedHashMap<Floor, Integer> getAllFloors) {
 
         DefaultTableModel tableModel = (DefaultTableModel) tbl_floor.getModel();
         tableModel.setRowCount(0);
@@ -359,7 +459,7 @@ public class ParkingView extends javax.swing.JFrame {
         }
     }
 
-    public void displayFloorCombo(LinkedHashMap<Floor, Integer> getAllFloors) {
+    private void displayFloorCombo(LinkedHashMap<Floor, Integer> getAllFloors) {
         cbo_floor.removeAllItems();
 
         LinkedHashMap<Floor, Integer> floors = getAllFloors;
@@ -368,7 +468,7 @@ public class ParkingView extends javax.swing.JFrame {
         }
     }
 
-    public void displayVehicleTable(List<Vehicle> getAllVehicles) {
+    private void displayVehicleTable(List<Vehicle> getAllVehicles) {
         DefaultTableModel tableModel = (DefaultTableModel) tbl_vehicle.getModel();
         tableModel.setRowCount(0);
 
@@ -400,38 +500,94 @@ public class ParkingView extends javax.swing.JFrame {
                 tableModel.addRow(rowData);
             }
         }
+        txt_totalMoney.setText("Total Money: " + totalMoney(getAllVehicles));
+        txt_totalVehiclesStay.setText("Total Vehicles Stay: " + totalVehiclesStayCount(getAllVehicles));
+        txt_totalVehiclesLeft.setText("Total Vehicles Left: " + totalVehiclesLeftCount(getAllVehicles));
     }
 
-    private void btn_checkinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_checkinActionPerformed
+    
+    private String totalMoney(List<Vehicle> getAllVehicles) {
+        double total = 0;
+        List<Vehicle> vehicles = getAllVehicles;
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getTimeOut() != null) {
+                total = total + controller.CalculateCostDouble(vehicle.getTimeIn(), vehicle.getTimeOut());
+            }
+        }
+        return total + " riel";
+    }
 
-        controller.CheckIn((String) cbo_floor.getSelectedItem());
-        displayFloorTable(controller.getAllFloors());
-        displayVehicleTable(controller.getAllVehicles());
-    }//GEN-LAST:event_btn_checkinActionPerformed
+    private int totalVehiclesStayCount(List<Vehicle> getAllVehicles) {
+        int total = 0;
+        List<Vehicle> vehicles = getAllVehicles;
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getTimeOut() == null) {
+                total++;
+            }
+        }
+        return total;
+    }
+    
+    private int totalVehiclesLeftCount(List<Vehicle> getAllVehicles) {
+        int total = 0;
+        List<Vehicle> vehicles = getAllVehicles;
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getTimeOut() != null) {
+                total++;
+            }
+        }
+        return total;
+    }
 
-    int h = 0;
-
-    private void btn_checkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_checkoutActionPerformed
-
-        if (txt_vehicleId.getText().isEmpty()) {
+    private void checkInClick(String txt_vehicleId) {
+        if (txt_vehicleId.isEmpty()) {
             String message = "\" Error 69 \"\n" + "input a vehicle ID PLEASE \n";
             JOptionPane.showMessageDialog(new JFrame(), message, "Error",
                     JOptionPane.ERROR_MESSAGE);
         } else {
             try {
-                String selectedVehicleId = txt_vehicleId.getText();
+                String selectedVehicleId = txt_vehicleId;
                 newTimeOut = new Date();
                 txt_info.setText(controller.CheckOut(selectedVehicleId, newTimeOut));
                 h = 0;
 
             } catch (Exception e) {
-                String message = "\" Error 69 \"\n your input vehicle ID:'" + txt_vehicleId.getText() + "' is not found \n";
+                String message = "\" Error 69 \"\n your input vehicle ID:'" + txt_vehicleId + "' is not found \n";
                 JOptionPane.showMessageDialog(new JFrame(), message, "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
 
+    private void checkOutClick(String txt_vehicleId) {
+        if (txt_vehicleId.isEmpty()) {
+            String message = "\" Error 69 \"\n" + "input a vehicle ID PLEASE \n";
+            JOptionPane.showMessageDialog(new JFrame(), message, "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                controller.CheckIn((String) cbo_floor.getSelectedItem(), txt_vehicleIdIn.getText());
+                displayFloorTable(controller.getAllFloors());
+                displayVehicleTable(controller.getAllVehicles());
+                txt_info.setText(txt_vehicleId + " Successfully In!");
+                txt_vehicleIdIn.setText("");
 
+            } catch (Exception e) {
+                String message = "\" Error 69 \"\n your input vehicle ID:'" + txt_vehicleId + "' is not found \n";
+                JOptionPane.showMessageDialog(new JFrame(), message, "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void btn_checkinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_checkinActionPerformed
+        checkOutClick(txt_vehicleIdIn.getText());
+    }//GEN-LAST:event_btn_checkinActionPerformed
+
+    int h = 0;
+
+    private void btn_checkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_checkoutActionPerformed
+        checkInClick(txt_vehicleIdOut.getText());
     }//GEN-LAST:event_btn_checkoutActionPerformed
 
     private void cbo_floorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_floorActionPerformed
@@ -442,12 +598,13 @@ public class ParkingView extends javax.swing.JFrame {
     private void btn_confirmPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmPaymentActionPerformed
         // TODO add your handling code here:
         if (newTimeOut != null) {
-            controller.ConfirmPayment(txt_vehicleId.getText(), newTimeOut);
+            controller.ConfirmPayment(txt_vehicleIdOut.getText(), newTimeOut);
 
             displayFloorTable(controller.getAllFloors());
             displayVehicleTable(controller.getAllVehicles());
             txt_info.setText("Paid, SAY Thank you to Our Customers, BOYS!");
             newTimeOut = null;
+            txt_vehicleIdOut.setText("");
         } else {
             String message = "\" Error 69 \"\n" + "select a vehicle PLEASE";
             JOptionPane.showMessageDialog(new JFrame(), message, "Error",
@@ -459,7 +616,7 @@ public class ParkingView extends javax.swing.JFrame {
     private void btn_addhourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addhourActionPerformed
         // TODO add your handling code here:
         try {
-            String selectedVehicleId = txt_vehicleId.getText();
+            String selectedVehicleId = txt_vehicleIdOut.getText();
             newTimeOut = new Date();
             h += 1;
             newTimeOut = new Date(newTimeOut.getTime() + (h * 60 * 60 * 1000));
@@ -481,7 +638,7 @@ public class ParkingView extends javax.swing.JFrame {
             try {
 
                 String selectedVehicleId = tbl_vehicle.getModel().getValueAt(tbl_vehicle.getSelectedRow(), 0).toString();
-                txt_vehicleId.setText(selectedVehicleId);
+                txt_vehicleIdOut.setText(selectedVehicleId);
                 newTimeOut = new Date();
                 txt_info.setText(controller.CheckOut(selectedVehicleId, newTimeOut));
                 h = 0;
@@ -507,16 +664,60 @@ public class ParkingView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_rdo_tblShowVehiclesAllActionPerformed
 
+    private void btn_genIDinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_genIDinActionPerformed
+        // TODO add your handling code here:
+        txt_vehicleIdIn.setText(TestingController.generatePlateId());
+    }//GEN-LAST:event_btn_genIDinActionPerformed
+
+    public Vehicle getRandomVehicleWithoutTimeout(List<Vehicle> vehicles) {
+        List<Vehicle> filteredVehicles = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getTimeOut() == null) {
+                filteredVehicles.add(vehicle);
+            }
+        }
+
+        if (!filteredVehicles.isEmpty()) { // Check if any vehicles without timeout exist
+            Random random = new Random();
+            int index = random.nextInt(filteredVehicles.size());
+            return filteredVehicles.get(index);
+        } else {
+            return null; // Return null if no vehicles without timeout are found
+        }
+    }
+
+    private void btn_genIDoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_genIDoutActionPerformed
+        // TODO add your handling code here:
+        List<Vehicle> allVehicles = controller.getAllVehicles();
+        Vehicle randomAvailableVehicle = getRandomVehicleWithoutTimeout(allVehicles);
+
+        if (randomAvailableVehicle != null) {
+            txt_vehicleIdOut.setText(randomAvailableVehicle.getVehicleId());
+            checkInClick(txt_vehicleIdOut.getText());
+        }
+    }//GEN-LAST:event_btn_genIDoutActionPerformed
+
+    private void txt_vehicleIdInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_vehicleIdInActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_vehicleIdInActionPerformed
+
+    private void txt_vehicleIdOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_vehicleIdOutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_vehicleIdOutActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_addhour;
     private javax.swing.JButton btn_checkin;
     private javax.swing.JButton btn_checkout;
     private javax.swing.JButton btn_confirmPayment;
+    private javax.swing.JButton btn_genIDin;
+    private javax.swing.JButton btn_genIDout;
     private javax.swing.JComboBox<String> cbo_floor;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -527,7 +728,11 @@ public class ParkingView extends javax.swing.JFrame {
     private javax.swing.JTable tbl_vehicle;
     private javax.swing.JTextArea txt_info;
     private javax.swing.JLabel txt_mall;
-    private javax.swing.JTextField txt_vehicleId;
+    private javax.swing.JLabel txt_totalMoney;
+    private javax.swing.JLabel txt_totalVehiclesLeft;
+    private javax.swing.JLabel txt_totalVehiclesStay;
+    private javax.swing.JTextField txt_vehicleIdIn;
+    private javax.swing.JTextField txt_vehicleIdOut;
     // End of variables declaration//GEN-END:variables
 
 }
